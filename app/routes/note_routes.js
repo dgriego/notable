@@ -7,6 +7,7 @@
 // DELETE a note.. #DELETE /note/:id
 
 module.exports = function(app, db) {
+  // CREATE new note
   app.post('/notes', (req, res) => {
     const note = { text: req.body.body, title: req.body.title };
 
@@ -19,6 +20,7 @@ module.exports = function(app, db) {
     });
   });
 
+  // GET list of notes
   app.get('/notes', (req, res) => {
     db.collection('notes').find().toArray((err, items) => {
       if (err) {
@@ -31,6 +33,7 @@ module.exports = function(app, db) {
 
   var ObjectID = require('mongodb').ObjectID;
 
+  // GET single notes info
   app.get('/notes/:id', (req, res) => {
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
@@ -44,6 +47,7 @@ module.exports = function(app, db) {
     });
   });
 
+  // UPDATE a note
   app.put('/notes/:id', (req, res) => {
     const id = req.params.id;
     const title = req.body.title;
@@ -62,6 +66,7 @@ module.exports = function(app, db) {
   });
 
 
+  // DELETE a note
   app.delete('/notes/:id', (req, res) => {
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
